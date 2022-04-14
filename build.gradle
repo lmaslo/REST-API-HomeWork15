@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
     testImplementation(
+            "io.rest-assured:rest-assured:5.0.1",
             "org.junit.jupiter:junit-jupiter:5.8.2",
             "org.slf4j:slf4j-simple:1.7.36")
 }
