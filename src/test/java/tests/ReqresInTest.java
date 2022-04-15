@@ -6,6 +6,7 @@ import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class ReqresInTest {
 
@@ -21,13 +22,13 @@ public class ReqresInTest {
                 .post("https://reqres.in/api/register")
                 .then()
                 .statusCode(200)
-                .body("token", is("QpwL5tke4Pnpja7X4"))
+                .body("token", is(notNullValue()))
                 .body("id", is(4));
 
     }
 
     @Test
-    void  missingPasswordRegister() {
+    void missingPasswordRegister() {
 
         String authorizedData = "{\"email\": \"eve.holt@reqres.in\"}";
         given()
@@ -72,11 +73,7 @@ public class ReqresInTest {
                 .body("total", is(12));
 
 
-
     }
-
-
-
 
 
     @Test
@@ -106,7 +103,7 @@ public class ReqresInTest {
                 .post("https://reqres.in/api/login")
                 .then()
                 .statusCode(200)
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .body("token", is(notNullValue()));
 
 
     }
