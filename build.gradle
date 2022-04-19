@@ -1,15 +1,34 @@
 plugins {
     id 'java-library'
+    id "io.qameta.allure" version "2.9.6"
 }
 
 repositories {
     mavenCentral()
 }
 
+def restAssuredVersion = "5.0.1",
+    allureVersion = "2.17.3"
+
+allure {
+    adapter {
+        aspectjWeaver.set(true)
+        frameworks {
+            junit5 {
+                adapterVersion.set(allureVersion)
+            }
+        }
+    }
+    report {
+        version.set(allureVersion)
+    }
+}
+
 dependencies {
     testImplementation(
-            "io.rest-assured:rest-assured:5.0.1",
+            "io.rest-assured:rest-assured:$restAssuredVersion",
             "com.codeborne:selenide:6.3.5",
+            "io.qameta.allure:allure-rest-assured:$allureVersion",
             "org.junit.jupiter:junit-jupiter:5.8.2",
             "org.slf4j:slf4j-simple:1.7.36")
 }
