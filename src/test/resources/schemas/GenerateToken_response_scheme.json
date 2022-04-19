@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "examples": [
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFsZXgiLCJwYXNzd29yZCI6ImFzZHNhZCNmcmV3X0RGUzIiLCJpYXQiOjE2NTAzNzM2ODN9.NQRImKNwrcQ7k45Un89mdxe0-QBfNUbTp8TprV4yLZQ",
+      "expires": "2022-04-26T13:08:03.339Z",
+      "status": "Success",
+      "result": "User authorized successfully."
+    }
+  ],
+  "required": [
+    "token",
+    "expires",
+    "status",
+    "result"
+  ],
+  "properties": {
+    "token": {
+      "$id": "#/properties/token",
+      "type": "string",
+      "title": "The token schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFsZXgiLCJwYXNzd29yZCI6ImFzZHNhZCNmcmV3X0RGUzIiLCJpYXQiOjE2NTAzNzM2ODN9.NQRImKNwrcQ7k45Un89mdxe0-QBfNUbTp8TprV4yLZQ"
+      ]
+    },
+    "expires": {
+      "$id": "#/properties/expires",
+      "type": "string",
+      "title": "The expires schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "2022-04-26T13:08:03.339Z"
+      ]
+    },
+    "status": {
+      "$id": "#/properties/status",
+      "type": "string",
+      "title": "The status schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "Success"
+      ]
+    },
+    "result": {
+      "$id": "#/properties/result",
+      "type": "string",
+      "title": "The result schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": [
+        "User authorized successfully."
+      ]
+    }
+  },
+  "additionalProperties": true
+}
