@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import io.qameta.allure.restassured.AllureRestAssured;
@@ -32,9 +33,16 @@ public class BookstoreTests2 {
     }
 
     @Test
-    @DisplayName("Проверка, что запрос BookStore/v1/Books, возвращает статус 200 и количество книг больше чем 0")
+    @DisplayName("Запрос BookStore/v1/Books")
+    @Description(
+            "Проверка, что запрос BookStore/v1/Books, возвращает статус 200 и количество книг больше чем 0"
+    )
     void getBookTest() {
-        get("/BookStore/v1/Books")
+        given()
+                .filter(withCustomTemplates())
+                .log().uri()
+                .log().body()
+                .get("/BookStore/v1/Books")
                 .then()
                 .log().status()
                 .log().body()
@@ -92,6 +100,11 @@ public class BookstoreTests2 {
     }
 
     @Test
+    @DisplayName("Запрос Account/v1/GenerateToken")
+    @Description(
+            "Проверка ответа на запрос. " +
+             "Данные для отправки userName:alex, password: asdsad#frew_DFS2"
+    )
     void generateTokenWithAllureListenerTest() {
         String data = "{ \"userName\": \"alex\", " +
                 "\"password\": \"asdsad#frew_DFS2\" }";
@@ -196,20 +209,20 @@ public class BookstoreTests2 {
 
 
         GenerateTokenResponse tokenResponse =
-        given()
-                .filter(withCustomTemplates())
-                .log().uri()
-                .log().body()
-                .contentType(JSON)
-                .body(credentials)
-                .when()
-                .post("Account/v1/GenerateToken")
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(200)
-                .body(matchesJsonSchemaInClasspath("schemas/GenerateToken_response_scheme.json"))
-                .extract().as(GenerateTokenResponse.class);
+                given()
+                        .filter(withCustomTemplates())
+                        .log().uri()
+                        .log().body()
+                        .contentType(JSON)
+                        .body(credentials)
+                        .when()
+                        .post("Account/v1/GenerateToken")
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .statusCode(200)
+                        .body(matchesJsonSchemaInClasspath("schemas/GenerateToken_response_scheme.json"))
+                        .extract().as(GenerateTokenResponse.class);
 
         assertThat(tokenResponse.getStatus()).isEqualTo("Success");
         assertThat(tokenResponse.getResult()).isEqualTo("User authorized successfully.");
