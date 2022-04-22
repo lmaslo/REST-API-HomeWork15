@@ -2,6 +2,7 @@ package tests;
 
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Cookie;
 
@@ -64,6 +65,7 @@ public class DemoWebshopTestsWishList {
 
 
     @Test
+    @Disabled
     void addToWishlishwithAuth() {
         String authorizationCookie =
                 given()

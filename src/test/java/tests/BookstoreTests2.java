@@ -1,11 +1,16 @@
 package tests;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import models.Credentials;
 import models.GenerateTokenResponse;
+import models.lombok.CredentialsLombok;
+import models.lombok.GenerateTokenResponseLombok;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.json.Json;
 
@@ -17,6 +22,8 @@ import static listeners.CustomAllureListener.withCustomTemplates;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.*;
 
+@Owner("lMaslo")
+@Feature("API. check Bookstore")
 public class BookstoreTests2 {
 
     @BeforeAll
@@ -25,9 +32,12 @@ public class BookstoreTests2 {
     }
 
     @Test
+    @DisplayName("Проверка, что запрос BookStore/v1/Books, возвращает статус 200 и количество книг больше чем 0")
     void getBookTest() {
         get("/BookStore/v1/Books")
                 .then()
+                .log().status()
+                .log().body()
                 .body("books", hasSize(greaterThan(0)))
                 .statusCode(200);
     }
@@ -209,4 +219,34 @@ public class BookstoreTests2 {
     }
 
 
+    @Test
+    void generateTokenWithLombokTest() {
+
+        CredentialsLombok credentials = new CredentialsLombok();
+        credentials.setUserName("alex");
+        credentials.setPassword("asdsad#frew_DFS2");
+
+
+        GenerateTokenResponseLombok tokenResponse =
+                given()
+                        .filter(withCustomTemplates())
+                        .log().uri()
+                        .log().body()
+                        .contentType(JSON)
+                        .body(credentials)
+                        .when()
+                        .post("Account/v1/GenerateToken")
+                        .then()
+                        .log().status()
+                        .log().body()
+                        .statusCode(200)
+                        .body(matchesJsonSchemaInClasspath("schemas/GenerateToken_response_scheme.json"))
+                        .extract().as(GenerateTokenResponseLombok.class);
+
+        assertThat(tokenResponse.getStatus()).isEqualTo("Success");
+        assertThat(tokenResponse.getResult()).isEqualTo("User authorized successfully.");
+        assertThat(tokenResponse.getExpires()).hasSizeGreaterThan(10);
+        assertThat(tokenResponse.getToken()).hasSizeGreaterThan(10).startsWith("eyJ");
+
+    }
 }
