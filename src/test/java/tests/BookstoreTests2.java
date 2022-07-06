@@ -221,7 +221,7 @@ public class BookstoreTests2 {
                         .log().status()
                         .log().body()
                         .statusCode(200)
-                        .body(matchesJsonSchemaInClasspath("schemas/GenerateToken_response_scheme.json"))
+                        //.body(matchesJsonSchemaInClasspath("schemas/GenerateToken_response_scheme.json"))
                         .extract().as(GenerateTokenResponse.class);
 
         assertThat(tokenResponse.getStatus()).isEqualTo("Success");
